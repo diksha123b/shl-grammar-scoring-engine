@@ -1,0 +1,16 @@
+{
+  "id": "dikshabarnwal123/shl-grammar-finetune-whisper-g",
+  "title": "shl-grammar-finetune-whisper-g",
+  "code_file": "finetune_whisper_g.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_tpu": "false",
+  "enable_internet": "true",
+  "machine_shape": "",
+  "dataset_sources": [],
+  "competition_sources": ["shl-hiring-assessment-2026"],
+  "kernel_sources": ["dikshabarnwal123/shl-grammar-audio2"],
+  "model_sources": []
+}

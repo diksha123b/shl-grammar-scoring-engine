@@ -1,0 +1,14 @@
+# Competition data must not be published (competition rules)
+Dataset_Final/
+*.wav
+*.zip
+data/
+outputs/
+pages.json
+pages.csv
+all_files.txt
+overview.txt
+.ipynb_checkpoints/
+__pycache__/
+.venv/
+submission.csv

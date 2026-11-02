@@ -1,0 +1,16 @@
+{
+  "id": "dikshabarnwal123/shl-grammar-audio45",
+  "title": "shl-grammar-audio45",
+  "code_file": "audio_emb45.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_tpu": "false",
+  "enable_internet": "true",
+  "machine_shape": "",
+  "dataset_sources": [],
+  "competition_sources": ["shl-hiring-assessment-2026"],
+  "kernel_sources": [],
+  "model_sources": []
+}
