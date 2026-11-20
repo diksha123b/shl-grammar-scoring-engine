@@ -1,4 +1,4 @@
-"""Final modelling pipeline (submission v10): features -> base models -> stacked grammar score.
+"""Final modelling pipeline (submission v11): features -> base models -> stacked grammar score.
 
 The heavy steps (speech-to-text, grammar/LLM features, audio embeddings, fine-tuning) run as
 Kaggle GPU scripts in `kernels/`; their outputs are downloaded into `outputs/`. This module
@@ -23,7 +23,8 @@ DATA = "Dataset_Final"
 TEXT_EMB = ["mpnet", "bge"]
 # Audio embeddings computed on the first 45 s of every clip (test clips are ~45 s, train ~60 s)
 AUDIO_EMB = [f"wavlmL_l{l}" for l in (6, 9, 12, 15, 18, 21, 24)] + [f"whisper_l{l}" for l in (8, 16, 20, 24, 28, 32)]
-FINETUNED = {"whisper_finetuned": ("finetune-whisper-g", "ftwg")}  # trained with the same grouped folds
+FINETUNED = {"whisper_finetuned": ("finetune-whisper-g", "ftwg"),  # trained with the same grouped folds
+             "text_finetuned": ("finetune-text", "fttx")}
 
 
 def load_table(out=OUT, data=DATA):

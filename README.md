@@ -2,7 +2,7 @@
 
 Solution to the **SHL Hiring Assessment 2026** Kaggle challenge: predict the grammar score (1–5) that human raters gave a 45–60 s recording of someone speaking English.
 
-**Result:** public leaderboard RMSE **0.3465**. Speaker-grouped cross-validation: RMSE 0.547, Pearson 0.841.
+**Result:** public leaderboard RMSE **0.3282** (rank 29 / 463). Speaker-grouped cross-validation: RMSE 0.525, Pearson 0.855.
 
 The full report (approach, preprocessing, pipeline, evaluation, charts, training RMSE) is in **[`notebook/grammar_scoring_engine.ipynb`](notebook/grammar_scoring_engine.ipynb)**.
 
@@ -10,9 +10,10 @@ The full report (approach, preprocessing, pipeline, evaluation, charts, training
 
 1. **Speech → text.** Whisper large-v3, prompted towards verbatim output so fillers and grammar mistakes are kept.
 2. **Text features.** Grammar-error rate from a grammar corrector (CoEdIT-large), GPT-2 sentence surprise, ASR confidence, fluency from word timings, an **LLM examiner** (Qwen) that scores the transcript against the official rubric, and text embeddings.
-3. **Audio features.** WavLM-large and Whisper-encoder embeddings (first 45 s, to match the shorter test clips), plus a Whisper encoder **fine-tuned** on the scores.
-4. **Model.** Ridge / LightGBM base models combined by a non-negative linear stack.
-5. **Validation.** Many training speakers appear more than once; test speakers don't. All models are therefore validated with **speaker-grouped folds** (clips clustered by voice similarity), which made CV agree with the leaderboard.
+3. **Fine-tuned text model.** DeBERTa-v3-large trained to predict the score directly from the transcript (the largest weight in the final blend).
+4. **Audio features.** WavLM-large and Whisper-encoder embeddings (first 45 s, to match the shorter test clips), plus a Whisper encoder **fine-tuned** on the scores.
+5. **Model.** Ridge / LightGBM base models combined by a non-negative linear stack.
+6. **Validation.** Many training speakers appear more than once; test speakers don't. All models are therefore validated with **speaker-grouped folds** (clips clustered by voice similarity), which made CV agree with the leaderboard.
 
 ## Repository layout
 
@@ -34,6 +35,7 @@ GPU steps, in order:
 | `kernels/audio2/audio_emb2.py` | `audio2/`: 60 s audio embeddings (layer 6 is used to build the voice groups) |
 | `kernels/audio45/audio_emb45.py` | `audio45/`: 45 s audio embeddings used by the models |
 | `kernels/finetune_whisper_g/finetune_whisper_g.py` | `finetune-whisper-g/`: fine-tuned Whisper predictions (grouped folds) |
+| `kernels/finetune_text/finetune_text.py` | `finetune-text/`: fine-tuned DeBERTa predictions from transcripts (grouped folds) |
 
 `kernels/audio`, `kernels/finetune` and `kernels/finetune_whisper` are earlier variants used in intermediate submissions.
 
