@@ -2,7 +2,7 @@
 
 Solution to the **SHL Hiring Assessment 2026** Kaggle challenge: predict the grammar score (1–5) that human raters gave a 45–60 s recording of someone speaking English.
 
-**Result:** public leaderboard RMSE **0.3282** (rank 29 / 463). Speaker-grouped cross-validation: RMSE 0.525, Pearson 0.855.
+**Result:** public leaderboard RMSE **0.3282**. Speaker-grouped cross-validation: RMSE 0.525, Pearson 0.855.
 
 The full report (approach, preprocessing, pipeline, evaluation, charts, training RMSE) is in **[`notebook/grammar_scoring_engine.ipynb`](notebook/grammar_scoring_engine.ipynb)**.
 
@@ -13,7 +13,7 @@ The full report (approach, preprocessing, pipeline, evaluation, charts, training
 3. **Fine-tuned text model.** DeBERTa-v3-large trained to predict the score directly from the transcript (the largest weight in the final blend).
 4. **Audio features.** WavLM-large and Whisper-encoder embeddings (first 45 s, to match the shorter test clips), plus a Whisper encoder **fine-tuned** on the scores.
 5. **Model.** Ridge / LightGBM base models combined by a non-negative linear stack.
-6. **Validation.** Many training speakers appear more than once; test speakers don't. All models are therefore validated with **speaker-grouped folds** (clips clustered by voice similarity), which made CV agree with the leaderboard.
+6. **Validation.** Many training speakers appear more than once; test speakers don't. All models are therefore validated with **speaker-grouped folds** (clips clustered by voice similarity), which made CV a better guide: the last two submissions (v10, v11) improved both grouped CV and the leaderboard. The absolute values still differ (0.525 vs 0.3282).
 
 ## Repository layout
 
